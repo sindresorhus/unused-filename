@@ -1,6 +1,6 @@
 # unused-filename [![Build Status](https://travis-ci.org/sindresorhus/unused-filename.svg?branch=master)](https://travis-ci.org/sindresorhus/unused-filename)
 
-> Get a unused filename by appending a number if it exists: `file.txt` → `file (1).txt`
+> Get an unused filename by appending a number if it exists: `file.txt` → `file (1).txt`
 
 Useful for safely writing, copying, moving files without overwriting existing files.
 
