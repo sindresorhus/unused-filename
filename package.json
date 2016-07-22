@@ -1,7 +1,7 @@
 {
   "name": "unused-filename",
   "version": "0.1.0",
-  "description": "Get a unused filename by appending a number if it exists: `file.txt` → `file (1).txt`",
+  "description": "Get an unused filename by appending a number if it exists: `file.txt` → `file (1).txt`",
   "license": "MIT",
   "repository": "sindresorhus/unused-filename",
   "author": {
