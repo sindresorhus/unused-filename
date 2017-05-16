@@ -35,7 +35,7 @@ unusedFilename('rainbow.txt').then(filename => {
 
 ### unusedFilename(filepath)
 
-Returns a `Promise` for a `string`.
+Returns a `Promise<string>`.
 
 ### unusedFilename.sync(filepath)
 

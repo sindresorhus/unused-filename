@@ -1,5 +1,5 @@
 import test from 'ava';
-import m from './';
+import m from '.';
 
 test('async', async t => {
 	t.is(await m('fixtures/noop.txt'), 'fixtures/noop.txt');
