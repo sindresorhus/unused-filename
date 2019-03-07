@@ -35,16 +35,17 @@ unusedFilename('rainbow.txt').then(filename => {
 
 ### unusedFilename(filepath)
 
-Returns a `Promise<string>`.
+Returns a `Promise<string>` containing either the original `filename` or the `filename` appended with a number.
 
 ### unusedFilename.sync(filepath)
 
-Returns a `string`.
+Returns a `string` containing either the original `filename` or the `filename` appended with a number.
 
 #### filepath
 
 Type: `string`
 
+The path to check for filename collision.
 
 ## Related
 
