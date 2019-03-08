@@ -16,8 +16,8 @@ const unusedFilename = filepath => {
 module.exports = unusedFilename;
 module.exports.default = unusedFilename;
 
-module.exports.sync = fp => {
-	const getFp = incrementer(fp);
+module.exports.sync = filepath => {
+	const getFp = incrementer(filepath);
 	const find = newFp => pathExists.sync(newFp) ? find(getFp()) : newFp;
-	return find(fp);
+	return find(filepath);
 };

@@ -24,10 +24,10 @@ $ npm install --save unused-filename
 ```js
 const unusedFilename = require('unused-filename');
 
-unusedFilename('rainbow.txt').then(filename => {
-	console.log(filename);
+(async () => {
+	console.log(await unusedFilename('rainbow.txt'));
 	//=> 'rainbow (2).txt'
-});
+})();
 ```
 
 
