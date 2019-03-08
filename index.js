@@ -9,7 +9,11 @@ const incrementer = filepath => {
 
 const unusedFilename = filepath => {
 	const getFp = incrementer(filepath);
-	const find = newFilepath => pathExists(newFilepath).then(x => x ? find(getFp()) : newFilepath);
+	const find = async newFilepath => {
+		const x = await pathExists(newFilepath);
+		return x ? find(getFp()) : newFilepath;
+	};
+
 	return find(filepath);
 };
 
