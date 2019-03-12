@@ -24,10 +24,10 @@ $ npm install --save unused-filename
 ```js
 const unusedFilename = require('unused-filename');
 
-unusedFilename('rainbow.txt').then(filename => {
-	console.log(filename);
+(async () => {
+	console.log(await unusedFilename('rainbow.txt'));
 	//=> 'rainbow (2).txt'
-});
+})();
 ```
 
 
@@ -35,16 +35,17 @@ unusedFilename('rainbow.txt').then(filename => {
 
 ### unusedFilename(filepath)
 
-Returns a `Promise<string>`.
+Returns a `Promise<string>` containing either the original `filename` or the `filename` appended with a number.
 
 ### unusedFilename.sync(filepath)
 
-Returns a `string`.
+Returns a `string` containing either the original `filename` or the `filename` appended with a number.
 
 #### filepath
 
 Type: `string`
 
+The path to check for filename collision.
 
 ## Related
 
