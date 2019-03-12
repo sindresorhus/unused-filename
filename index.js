@@ -2,26 +2,22 @@
 const pathExists = require('path-exists');
 const modifyFilename = require('modify-filename');
 
-const incrementer = filepath => {
-	let i = 0;
-	return () => modifyFilename(filepath, (filename, ext) => `${filename} (${++i})${ext}`);
+const incrementer = filePath => {
+	let counter = 0;
+	return () => modifyFilename(filePath, (filename, extension) => `${filename} (${++counter})${extension}`);
 };
 
-const unusedFilename = filepath => {
-	const getFp = incrementer(filepath);
-	const find = async newFilepath => {
-		const x = await pathExists(newFilepath);
-		return x ? find(getFp()) : newFilepath;
-	};
-
-	return find(filepath);
+const unusedFilename = filePath => {
+	const getFilePath = incrementer(filePath);
+	const find = async newFilePath => await pathExists(newFilePath) ? find(getFilePath()) : newFilePath;
+	return find(filePath);
 };
 
 module.exports = unusedFilename;
 module.exports.default = unusedFilename;
 
-module.exports.sync = filepath => {
-	const getFp = incrementer(filepath);
-	const find = newFp => pathExists.sync(newFp) ? find(getFp()) : newFp;
-	return find(filepath);
+module.exports.sync = filePath => {
+	const getFilePath = incrementer(filePath);
+	const find = newFilePath => pathExists.sync(newFilePath) ? find(getFilePath()) : newFilePath;
+	return find(filePath);
 };

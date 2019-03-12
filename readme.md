@@ -8,7 +8,7 @@ Useful for safely writing, copying, moving files without overwriting existing fi
 ## Install
 
 ```
-$ npm install --save unused-filename
+$ npm install unused-filename
 ```
 
 
@@ -33,19 +33,20 @@ const unusedFilename = require('unused-filename');
 
 ## API
 
-### unusedFilename(filepath)
+### unusedFilename(filePath)
 
 Returns a `Promise<string>` containing either the original `filename` or the `filename` appended with a number.
 
-### unusedFilename.sync(filepath)
+### unusedFilename.sync(filePath)
 
 Returns a `string` containing either the original `filename` or the `filename` appended with a number.
 
-#### filepath
+#### filePath
 
 Type: `string`
 
 The path to check for filename collision.
+
 
 ## Related
 
