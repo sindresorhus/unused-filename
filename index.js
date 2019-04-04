@@ -14,6 +14,7 @@ const unusedFilename = filePath => {
 };
 
 module.exports = unusedFilename;
+// TODO: Remove this for the next major release
 module.exports.default = unusedFilename;
 
 module.exports.sync = filePath => {
