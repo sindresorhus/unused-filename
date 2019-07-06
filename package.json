@@ -36,7 +36,8 @@
 	],
 	"dependencies": {
 		"modify-filename": "^1.1.0",
-		"path-exists": "^4.0.0"
+		"path-exists": "^4.0.0",
+		"slash": "^3.0.0"
 	},
 	"devDependencies": {
 		"ava": "^1.4.1",

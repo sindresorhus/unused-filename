@@ -33,13 +33,13 @@ const unusedFilename = require('unused-filename');
 
 ## API
 
-### unusedFilename(filePath[, incrementer])
+### unusedFilename(filePath, options?)
 
-Returns a `Promise<string>` containing either the original `filename` or the `filename` increased by `incrementer`.
+Returns a `Promise<string>` containing either the original `filename` or the `filename` increased by `options.incrementer`.
 
-### unusedFilename.sync(filePath[, incrementer])
+### unusedFilename.sync(filePath, options?)
 
-Returns a `string` containing either the original `filename` or the `filename` increased by `incrementer`.
+Returns a `string` containing either the original `filename` or the `filename` increased by `options.incrementer`.
 
 #### filePath
 
@@ -47,11 +47,15 @@ Type: `string`
 
 The path to check for filename collision.
 
-#### incrementer `optional`
+#### options
+
+Type: `object`
+
+##### options.incrementer
 
 Type: `function`
 
-The function to increase filename.
+filename increment function.
 
 
 ## Related
