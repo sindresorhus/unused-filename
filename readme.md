@@ -55,7 +55,7 @@ Type: `object`
 
 Type: `function`
 
-filename increment function.
+filename increase function.
 
 
 ## Related
