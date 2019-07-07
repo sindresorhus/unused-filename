@@ -3,7 +3,7 @@ declare namespace unusedFilename {
 		/**
 		Filename increase function
 		*/
-		incrementer?: (filename: string, extension: string, counter: number) => string;
+		readonly incrementer?: (filename: string, extension: string, counter: number) => string;
 	}
 }
 
