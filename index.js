@@ -1,7 +1,6 @@
 'use strict';
 const pathExists = require('path-exists');
 const modifyFilename = require('modify-filename');
-const slash = require('slash');
 
 const defaultIncrementer = (filename, extension, counter) =>
 	`${filename} (${counter})${extension}`;
@@ -36,7 +35,7 @@ const findUnusedFilePath = (filePath, options, sync) => {
 
 			return pathExists.sync(newFilePath) ?
 				find(incrementer()) :
-				slash(newFilePath);
+				newFilePath;
 		};
 	} else {
 		find = async newFilePath => {
@@ -44,7 +43,7 @@ const findUnusedFilePath = (filePath, options, sync) => {
 
 			return (await pathExists(newFilePath)) ?
 				find(incrementer()) :
-				slash(newFilePath);
+				newFilePath;
 		};
 	}
 

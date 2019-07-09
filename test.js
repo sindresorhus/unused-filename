@@ -1,16 +1,18 @@
 import test from 'ava';
+// For test on windows
+import slash from 'slash';
 import unusedFilename from '.';
 
 test('async', async t => {
-	t.is(await unusedFilename('fixtures/noop.txt'), 'fixtures/noop.txt');
-	t.is(await unusedFilename('fixtures/unicorn.txt'), 'fixtures/unicorn (1).txt');
-	t.is(await unusedFilename('fixtures/rainbow.txt'), 'fixtures/rainbow (3).txt');
+	t.is(slash(await unusedFilename('fixtures/noop.txt')), 'fixtures/noop.txt');
+	t.is(slash(await unusedFilename('fixtures/unicorn.txt')), 'fixtures/unicorn (1).txt');
+	t.is(slash(await unusedFilename('fixtures/rainbow.txt')), 'fixtures/rainbow (3).txt');
 });
 
 test('sync', t => {
-	t.is(unusedFilename.sync('fixtures/noop.txt'), 'fixtures/noop.txt');
-	t.is(unusedFilename.sync('fixtures/unicorn.txt'), 'fixtures/unicorn (1).txt');
-	t.is(unusedFilename.sync('fixtures/rainbow.txt'), 'fixtures/rainbow (3).txt');
+	t.is(slash(unusedFilename.sync('fixtures/noop.txt')), 'fixtures/noop.txt');
+	t.is(slash(unusedFilename.sync('fixtures/unicorn.txt')), 'fixtures/unicorn (1).txt');
+	t.is(slash(unusedFilename.sync('fixtures/rainbow.txt')), 'fixtures/rainbow (3).txt');
 });
 
 test('options.incrementer', async t => {
@@ -25,19 +27,19 @@ test('options.incrementer', async t => {
 			);
 
 			await t.throwsAsync(
-				async () => unusedFilename(testFile, {incrementer}),
+				unusedFilename(testFile, {incrementer}),
 				error,
 				message
 			);
 		} else {
 			t.is(
-				unusedFilename.sync(testFile, {incrementer}),
+				slash(unusedFilename.sync(testFile, {incrementer})),
 				result,
 				message
 			);
 
 			t.is(
-				await unusedFilename(testFile, {incrementer}),
+				slash(await unusedFilename(testFile, {incrementer})),
 				result,
 				message
 			);
@@ -65,9 +67,9 @@ test('options.incrementer', async t => {
 			},
 			{
 				incrementer(filename, extension, counter) {
-					return `${filename}${' - copy'.repeat(counter)}${extension}`;
+					return `${filename}${'_'.repeat(counter)}${extension}`;
 				},
-				result: 'fixtures/rainbow - copy - copy - copy.txt'
+				result: 'fixtures/rainbow___.txt'
 			}
 		].map(incrementerTest)
 	);

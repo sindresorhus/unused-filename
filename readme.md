@@ -57,6 +57,20 @@ Type: `function`
 
 filename increase function.
 
+Example:
+
+```js
+(async () => {
+	const filename = await unusedFilename('rainbow.txt', {
+		incrementer(filename, extension, counter) {
+			return `${filename}${'_'.repeat(counter)}${extension}`
+		}
+	})
+
+	console.log(filename);
+	//=> 'rainbow__.txt'
+})();
+```
 
 ## Related
 
