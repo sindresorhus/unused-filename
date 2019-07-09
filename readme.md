@@ -35,11 +35,11 @@ const unusedFilename = require('unused-filename');
 
 ### unusedFilename(filePath, options?)
 
-Returns a `Promise<string>` containing either the original `filename` or the `filename` increased by `options.incrementer`.
+Returns a `Promise<string>` containing either the original `filename` or the `filename` increment by `options.incrementer`.
 
 ### unusedFilename.sync(filePath, options?)
 
-Returns a `string` containing either the original `filename` or the `filename` increased by `options.incrementer`.
+Returns a `string` containing either the original `filename` or the `filename` increment by `options.incrementer`.
 
 #### filePath
 

@@ -1,7 +1,7 @@
 declare namespace unusedFilename {
 	interface Options {
 		/**
-		Filename increase function.
+		Filename increment function.
 
 		@param filename - The filename of filePath.
 		@param extension - The extension of filePath.
@@ -30,18 +30,18 @@ declare namespace unusedFilename {
 
 declare const unusedFilename: {
 	/**
-	Get an unused `filename` increased by `option.incrementer` if it exists: `file.txt` → `file (1).txt`.
+	Get an unused `filename` increment by `option.incrementer` if it exists: `file.txt` → `file (1).txt`.
 
 	@param filePath - The path to check for filename collision.
-	@returns Either the original `filename` or the `filename` increased by `option.incrementer`.
+	@returns Either the original `filename` or the `filename` increment by `option.incrementer`.
 	*/
 	(filePath: string, options?: unusedFilename.Options): Promise<string>;
 
 	/**
-	Synchronously get an unused `filename` increased by `option.incrementer` if it exists: `file.txt` → `file (1).txt`.
+	Synchronously get an unused `filename` increment by `option.incrementer` if it exists: `file.txt` → `file (1).txt`.
 
 	@param filePath - The path to check for filename collision.
-	@returns Either the original `filename` or the `filename` increased by `option.incrementer`.
+	@returns Either the original `filename` or the `filename` increment by `option.incrementer`.
 	*/
 	sync(filePath: string, options?: unusedFilename.Options): string;
 
