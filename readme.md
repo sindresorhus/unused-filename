@@ -51,9 +51,9 @@ The path to check for filename collision.
 
 Type: `object`
 
-##### options.incrementer
+##### incrementer
 
-Type: `function`
+Type: `Function`
 
 filename increase function.
 
