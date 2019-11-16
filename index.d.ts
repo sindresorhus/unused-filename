@@ -3,14 +3,13 @@ declare namespace unusedFilename {
 		/**
 		Filename increment function.
 
-		@param filename - The filename of filePath.
-		@param extension - The extension of filePath.
+		@param filename - The filename of the file path.
+		@param extension - The extension of the file path.
 		@param counter - Tried count.
-		@returns Modified filename to try
+		@returns The new filename.
 
 		@example
-
-		```js
+		```
 		(async () => {
 			const filename = await unusedFilename('rainbow.txt', {
 				incrementer(filename, extension, counter) {
