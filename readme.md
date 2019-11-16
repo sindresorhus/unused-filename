@@ -60,6 +60,8 @@ filename increase function.
 Example:
 
 ```js
+const unusedFilename = require('unused-filename');
+
 (async () => {
 	const filename = await unusedFilename('rainbow.txt', {
 		incrementer(filename, extension, counter) {
