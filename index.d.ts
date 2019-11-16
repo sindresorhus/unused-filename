@@ -10,6 +10,8 @@ declare namespace unusedFilename {
 
 		@example
 		```
+		import unusedFilename = require('unused-filename');
+
 		(async () => {
 			const filename = await unusedFilename('rainbow.txt', {
 				incrementer(filename, extension, counter) {
@@ -21,7 +23,6 @@ declare namespace unusedFilename {
 			//=> 'rainbow__.txt'
 		})();
 		```
-
 		*/
 		readonly incrementer?: (filename: string, extension: string, counter: number) => string;
 	}
