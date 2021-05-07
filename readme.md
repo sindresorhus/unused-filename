@@ -51,34 +51,32 @@ The path to check for filename collision.
 
 Type: `object`
 
-Parameters:
-
-- **incrementer**: `Incrementer` - a function that accepts a file path and increments its index.
-- **maxTries**: `number` - a max number of attempts to take. Default: `Infinity`.
+Options object with following parameters.
 
 ##### incrementer
 
-Type: `(filePath: string) => string`
-Default: Parentheses incrementer (`file.txt` → `file (1).txt`).
+Type: `(filePath: string) => string`\
+Default: parentheses incrementer (`file.txt` → `file (1).txt`)
 
 A simple function that accepts a file path, and increments its index. It's incrementer's responsibility to extract an already existing index from passed file.
 
-Example incrementer that appends new index as an underscore suffix:
+Example incrementer that inserts a new index as a prefix:
 
 ```js
 const modifyFilename = require('modify-filename');
-const underscoreIncrementer = filePath => modifyFilename(filePath, (filename, extension) => {
-	let [, originalFilename, index] = filename.match(/^(.*)_(\d+)$/) || [null, filename, 0];
-	return `${originalFilename.trim()}_${++index}${extension}`;
-});
+const prefixIncrementer = (filename, extension) => {
+	const match = filename.match(/^(?<index>\d+)_(?<originalFilename>.*)$/);
+	let {originalFilename, index} = match ? match.groups : {originalFilename: filename, index: 0};
+	return `${++index}_${originalFilename.trim()}${extension}`;
+};
 
-console.log(await unusedFilename('rainbow.txt', {incrementer: underscoreIncrementer}));
-//=> 'rainbow_1.txt'
+console.log(await unusedFilename('rainbow.txt', {incrementer: prefixIncrementer}));
+//=> '1_rainbow.txt'
 ```
 
 ##### maxTries
 
-Type: `number`
+Type: `number`\
 Default: `Infinity`
 
 Max number of attempts to find an unused filename before giving up and returning the last tried name.
