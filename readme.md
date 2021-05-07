@@ -83,18 +83,12 @@ Default: `Infinity`
 
 Max number of attempts to find an unused filename before giving up and returning the last tried name.
 
-### unusedFilename.parenthesesIncrementer
+### unusedFilename.separatorIncrementer
 
-The default incrementer: `file.txt` → `file (1).txt`
-
-### unusedFilename.underscoreIncrementer
-
-Underscore incrementer: `file.txt` → `file_1.txt`
-
-Usage:
+Creates an incrementer that appends a number after a separator:
 
 ```js
-console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.underscoreIncrementer}));
+console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.separatorIncrementer('_')}));
 //=> 'rainbow_1.txt'
 ```
 

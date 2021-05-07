@@ -7,8 +7,8 @@ const parenthesesIncrementer = (filename, extension) => {
 	return `${originalFilename.trim()} (${++index})${extension}`;
 };
 
-const underscoreIncrementer = (filename, extension) => {
-	let [, originalFilename, index] = filename.match(/^(.*)_(\d+)$/) || [null, filename, 0];
+const separatorIncrementer = separator => (filename, extension) => {
+	let [, originalFilename, index] = new RegExp(`^(.*)${separator}(\\d+)$`).exec(filename) || [null, filename, 0];
 	return `${originalFilename.trim()}_${++index}${extension}`;
 };
 
@@ -48,5 +48,4 @@ module.exports.sync = (filePath, {incrementer = parenthesesIncrementer, maxTries
 	return unusedFilePath;
 };
 
-module.exports.parenthesesIncrementer = parenthesesIncrementer;
-module.exports.underscoreIncrementer = underscoreIncrementer;
+module.exports.separatorIncrementer = separatorIncrementer;

@@ -3,7 +3,7 @@ import test from 'ava';
 import unusedFilename from '.';
 
 const fixturePath = file => Path.join('fixtures', file);
-const underscore = {incrementer: unusedFilename.underscoreIncrementer};
+const underscore = {incrementer: unusedFilename.separatorIncrementer('_')};
 
 test('async', async t => {
 	t.is(await unusedFilename(fixturePath('noop.txt')), fixturePath('noop.txt'));

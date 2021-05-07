@@ -57,14 +57,10 @@ declare const unusedFilename: {
 	sync(filePath: string, options?: unusedFilename.Options): string;
 
 	/**
-	Appends a number inside parentheses (default): `file.txt` → `file (1).txt`.
+	Creates an incrementer that appends a number after a separator.
+	`separatorIncrementer('_')` will increment with `file.txt` → `file_1.txt`.
 	*/
-	parenthesesIncrementer: unusedFilename.Incrementer;
-
-	/**
-	Appends underscore number: `file.txt` → `file_1.txt`.
-	*/
-	underscoreIncrementer: unusedFilename.Incrementer;
+	separatorIncrementer: (separator: string) => unusedFilename.Incrementer;
 
 	// TODO: Remove this for the next major release
 	default: typeof unusedFilename;
