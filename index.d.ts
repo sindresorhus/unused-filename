@@ -21,7 +21,7 @@ declare namespace unusedFilename {
 	@param filename - The filename of the file path.
 	@param extension - The extension of the file path.
 
-	@returns The new incremented filename, including extension.
+	@returns A tuple of original filename, and new incremented filename, including extension.
 
 	@example
 	```
@@ -31,7 +31,8 @@ declare namespace unusedFilename {
 			incrementer(filename, extension) => {
 				const match = filename.match(/^(?<index>\d+)_(?<originalFilename>.*)$/);
 				let {originalFilename, index} = match ? match.groups : {originalFilename: filename, index: 0};
-				return `${++index}_${originalFilename.trim()}${extension}`;
+				let originalFilename = originalFilename.trim();
+				return [`${originalFilename}${extension}`, `${++index}_${originalFilename}${extension}`;
 			}
 		})
 		console.log(filename);
@@ -41,6 +42,17 @@ declare namespace unusedFilename {
 	*/
 	interface Incrementer {
 		(filename: string, extension: string): string;
+	}
+
+	/**
+	 * An error thrown when maxTries limit has been reached without finding an unused path.
+	 *
+	 * @param originalPath - Path without the incrementation sequence.
+	 * @param lastTriedPath - Last tested incremented path.
+	 */
+	interface MaxTryError extends Error {
+		originalPath: string;
+		lastTriedPath: string;
 	}
 }
 
@@ -75,6 +87,16 @@ declare const unusedFilename: {
 	- On Windows, <>:"/|?* along with trailing periods are reserved.
 	*/
 	separatorIncrementer: (separator: string) => unusedFilename.Incrementer;
+
+	/**
+	 * An error thrown when maxTries limit has been reached without finding an unused path.
+	 *
+	 * @param originalPath - Path without the incrementation sequence.
+	 * @param lastTriedPath - Last tested incremented path.
+	 */
+	MaxTryError: unusedFilename.MaxTryError & {
+		new (originalPath: string, lastTriedPath: string): unusedFilename.MaxTryError;
+	};
 
 	// TODO: Remove this for the next major release
 	default: typeof unusedFilename;

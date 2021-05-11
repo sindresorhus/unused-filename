@@ -12,7 +12,12 @@ test('async', async t => {
 });
 
 test('async - maxTries option', async t => {
-	t.is(await unusedFilename(fixturePath('rainbow.txt'), {maxTries: 1}), fixturePath('rainbow (1).txt'));
+	const error = await t.throwsAsync(async () => {
+		await unusedFilename(fixturePath('rainbow (1).txt'), {maxTries: 1});
+	}, {instanceOf: unusedFilename.MaxTryError});
+
+	t.is(error.originalPath, fixturePath('rainbow.txt'));
+	t.is(error.lastTriedPath, fixturePath('rainbow (2).txt'));
 });
 
 test('async - incrementer option', async t => {
@@ -28,7 +33,12 @@ test('sync', t => {
 });
 
 test('sync - maxTries option', t => {
-	t.is(unusedFilename.sync(fixturePath('rainbow.txt'), {maxTries: 1}), fixturePath('rainbow (1).txt'));
+	const error = t.throws(() => {
+		unusedFilename.sync(fixturePath('rainbow (1).txt'), {maxTries: 1});
+	}, {instanceOf: unusedFilename.MaxTryError});
+
+	t.is(error.originalPath, fixturePath('rainbow.txt'));
+	t.is(error.lastTriedPath, fixturePath('rainbow (2).txt'));
 });
 
 test('sync - incrementer option', t => {
