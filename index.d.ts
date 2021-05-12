@@ -79,6 +79,18 @@ declare const unusedFilename: {
 	@param options - Options object.
 
 	@returns Either the original `filename` or the `filename` appended with a number (or modified by `option.incrementer` if specified).
+
+	If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index.
+
+	@example
+	```js
+	const unusedFilename = require('unused-filename');
+
+	(async () => {
+		console.log(await unusedFilename('rainbow (1).txt'));
+		//=> 'rainbow (2).txt'
+	})();
+	```
 	*/
 	(filePath: string, options?: unusedFilename.Options): Promise<string>;
 
@@ -89,6 +101,18 @@ declare const unusedFilename: {
 	@param options - Options object.
 
 	@returns Either the original `filename` or the `filename` appended with a number (or modified by `option.incrementer` if specified).
+
+	If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index.
+
+	@example
+	```js
+	const unusedFilename = require('unused-filename');
+
+	(async () => {
+		console.log(await unusedFilename('rainbow (1).txt'));
+		//=> 'rainbow (2).txt'
+	})();
+	```
 	*/
 	sync(filePath: string, options?: unusedFilename.Options): string;
 
