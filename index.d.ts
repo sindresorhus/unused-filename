@@ -25,7 +25,7 @@ declare namespace unusedFilename {
 
 	@example
 	```
-	import unusedFilename = require('unused-filename');
+	const unusedFilename = require('unused-filename');
 	(async () => {
 		const filename = await unusedFilename('rainbow.txt', {
 			incrementer(filename, extension) => {
@@ -52,7 +52,9 @@ declare namespace unusedFilename {
 
 	@example
 	```
+	const unusedFilename = require('unused-filename');
 	const MaxTryError = unusedFilename.MaxTryError;
+
 	try {
 		const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
 	} catch (error) {
@@ -109,7 +111,9 @@ declare const unusedFilename: {
 
 	@example
 	```
+	const unusedFilename = require('unused-filename');
 	const MaxTryError = unusedFilename.MaxTryError;
+
 	try {
 		const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
 	} catch (error) {

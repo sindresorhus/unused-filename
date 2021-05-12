@@ -107,7 +107,9 @@ It comes with 2 custom properties:
 Example:
 
 ```js
+const unusedFilename = require('unused-filename');
 const MaxTryError = unusedFilename.MaxTryError;
+
 try {
 	const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
 } catch (error) {
