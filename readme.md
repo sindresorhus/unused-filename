@@ -37,9 +37,20 @@ const unusedFilename = require('unused-filename');
 
 Returns a `Promise<string>` containing either the original `filename` or the `filename` increment by `options.incrementer`.
 
+If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index. Example:
+
+```js
+const unusedFilename = require('unused-filename');
+
+(async () => {
+	console.log(await unusedFilename('rainbow (1).txt'));
+	//=> 'rainbow (2).txt'
+})();
+```
+
 ### unusedFilename.sync(filePath, options?)
 
-Returns a `string` containing either the original `filename` or the `filename` increment by `options.incrementer`.
+Synchronous version of `unusedFilename`.
 
 #### filePath
 
@@ -58,9 +69,9 @@ Options object with following parameters.
 Type: `(filePath: string) => [string, string]`\
 Default: parentheses incrementer (`file.txt` → `file (1).txt`)
 
-A simple function that accepts a file path, and increments its index. It's incrementer's responsibility to extract an already existing index from passed file.
+A function that accepts a file path, and increments its index. It's incrementer's responsibility to extract an already existing index from passed file so that it picks up and continues incrementing an already present index instead of appending a second one.
 
-The incrementer has to return a tuple of `[originalFilename, incrementedFilename]`, where `originalFilename` is the filename without incrementation sequence, and `incrementedFilename` is a filename with input incrementation sequence bumped by one.
+The incrementer has to return a tuple of `[originalFilename, incrementedFilename]`, where `originalFilename` is the filename without incrementation index, and `incrementedFilename` is a filename with input's incrementation index bumped by one.
 
 Example incrementer that inserts a new index as a prefix:
 
