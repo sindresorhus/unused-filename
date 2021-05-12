@@ -45,11 +45,24 @@ declare namespace unusedFilename {
 	}
 
 	/**
-	 * An error thrown when maxTries limit has been reached without finding an unused path.
-	 *
-	 * @param originalPath - Path without the incrementation sequence.
-	 * @param lastTriedPath - Last tested incremented path.
-	 */
+	An error thrown when maxTries limit has been reached without finding an unused path.
+
+	@param originalPath - Path without the incrementation sequence.
+	@param lastTriedPath - Last tested incremented path.
+
+	@example
+	```
+	const MaxTryError = unusedFilename.MaxTryError;
+	try {
+		const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
+	} catch (error) {
+		if (error instanceof MaxTryError) {
+			console.log(error.originalPath); // 'rainbow.txt'
+			console.log(error.lastTriedPath); // 'rainbow (1).txt'
+		}
+	}
+	```
+	*/
 	interface MaxTryError extends Error {
 		originalPath: string;
 		lastTriedPath: string;
@@ -89,11 +102,24 @@ declare const unusedFilename: {
 	separatorIncrementer: (separator: string) => unusedFilename.Incrementer;
 
 	/**
-	 * An error thrown when maxTries limit has been reached without finding an unused path.
-	 *
-	 * @param originalPath - Path without the incrementation sequence.
-	 * @param lastTriedPath - Last tested incremented path.
-	 */
+	An error thrown when maxTries limit has been reached without finding an unused path.
+
+	@param originalPath - Path without the incrementation sequence.
+	@param lastTriedPath - Last tested incremented path.
+
+	@example
+	```
+	const MaxTryError = unusedFilename.MaxTryError;
+	try {
+		const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
+	} catch (error) {
+		if (error instanceof MaxTryError) {
+			console.log(error.originalPath); // 'rainbow.txt'
+			console.log(error.lastTriedPath); // 'rainbow (1).txt'
+		}
+	}
+	```
+	*/
 	MaxTryError: unusedFilename.MaxTryError & {
 		new (originalPath: string, lastTriedPath: string): unusedFilename.MaxTryError;
 	};
