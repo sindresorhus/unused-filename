@@ -109,7 +109,7 @@ declare const unusedFilename: {
 	const unusedFilename = require('unused-filename');
 
 	(async () => {
-		console.log(await unusedFilename('rainbow (1).txt'));
+		console.log(unusedFilename.sync('rainbow (1).txt'));
 		//=> 'rainbow (2).txt'
 	})();
 	```
