@@ -4,13 +4,11 @@
 
 Useful for safely writing, copying, moving files without overwriting existing files.
 
-
 ## Install
 
 ```
 $ npm install unused-filename
 ```
-
 
 ## Usage
 
@@ -30,14 +28,13 @@ const unusedFilename = require('unused-filename');
 })();
 ```
 
-
 ## API
 
 ### unusedFilename(filePath, options?)
 
 Returns a `Promise<string>` containing either the original `filename` or the `filename` increment by `options.incrementer`.
 
-If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index. Example:
+If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index:
 
 ```js
 const unusedFilename = require('unused-filename');
@@ -62,21 +59,20 @@ The path to check for filename collision.
 
 Type: `object`
 
-Options object with following parameters.
-
 ##### incrementer
 
 Type: `(filePath: string) => [string, string]`\
-Default: parentheses incrementer (`file.txt` → `file (1).txt`)
+Default: Parentheses incrementer: `file.txt` → `file (1).txt`
 
-A function that accepts a file path, and increments its index. It's incrementer's responsibility to extract an already existing index from passed file so that it picks up and continues incrementing an already present index instead of appending a second one.
+A function that accepts a file path, and increments its index. It's the incrementer's responsibility to extract an already existing index from the given file path so that it picks up and continues incrementing an already present index instead of appending a second one.
 
-The incrementer has to return a tuple of `[originalFilename, incrementedFilename]`, where `originalFilename` is the filename without incrementation index, and `incrementedFilename` is a filename with input's incrementation index bumped by one.
+The incrementer has to return a tuple of `[originalFilename, incrementedFilename]`, where `originalFilename` is the filename without the index, and `incrementedFilename` is a filename with input's index bumped by one.
 
 Example incrementer that inserts a new index as a prefix:
 
 ```js
-const modifyFilename = require('modify-filename');
+const unusedFilename = require('unused-filename');
+
 const prefixIncrementer = (filename, extension) => {
 	const match = filename.match(/^(?<index>\d+)_(?<originalFilename>.*)$/);
 	let {originalFilename, index} = match ? match.groups : {originalFilename: filename, index: 0};
@@ -93,33 +89,42 @@ console.log(await unusedFilename('rainbow.txt', {incrementer: prefixIncrementer}
 Type: `number`\
 Default: `Infinity`
 
-Max number of attempts to find an unused filename.
+The max number of attempts to find an unused filename.
 
-When `maxTries` limit is reached, the function will throw [`MaxTryError`](#unusedFilename-MaxTryError).
+When the limit is reached, the function will throw `unusedFilename.MaxTryError`.
 
 ### unusedFilename.separatorIncrementer
 
-Creates an incrementer that appends a number after a separator:
+Creates an incrementer that appends a number after a separator.
+
+`separatorIncrementer('_')` will increment `file.txt` → `file_1.txt`.
+
+Not all characters can be used as separators:
+- On Unix-like systems, `/` is reserved.
+- On Windows, `<>:"/|?*` along with trailing periods are reserved.
 
 ```js
+const unusedFilename = require('unused-filename');
+
 console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.separatorIncrementer('_')}));
 //=> 'rainbow_1.txt'
 ```
 
 ### unusedFilename.MaxTryError
 
-Error thrown when `maxTries` limit is reached without finding an unused filename.
+The error thrown when `maxTries` limit is reached without finding an unused filename.
 
 It comes with 2 custom properties:
 
-- `originalPath` - path without incrementation sequence
-- `lastTriedPath` - last tested incremented path
+- `originalPath` - Path without incrementation sequence.
+- `lastTriedPath` - The last tested incremented path.
 
 Example:
 
 ```js
 const unusedFilename = require('unused-filename');
-const MaxTryError = unusedFilename.MaxTryError;
+
+const {MaxTryError} = unusedFilename;
 
 try {
 	const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});
@@ -131,12 +136,6 @@ try {
 }
 ```
 
-
 ## Related
 
 - [filenamify](https://github.com/sindresorhus/filenamify) - Convert a string to a valid safe filename
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)

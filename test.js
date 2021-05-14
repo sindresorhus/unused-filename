@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import unusedFilename from '.';
+import unusedFilename from './index.js';
 
 const fixturePath = file => path.join('fixtures', file);
 const underscore = {incrementer: unusedFilename.separatorIncrementer('_')};

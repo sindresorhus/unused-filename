@@ -35,7 +35,7 @@ const incrementPath = (filePath, incrementer) => {
 	return [path.join(dirname, originalFilename), path.join(dirname, incrementedFilename)];
 };
 
-const unusedFilename = async (filePath, {incrementer = parenthesesIncrementer, maxTries = Infinity} = {}) => {
+const unusedFilename = async (filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) => {
 	let tries = 0;
 	let [originalPath] = incrementPath(filePath, incrementer);
 	let unusedPath = filePath;
@@ -59,7 +59,7 @@ module.exports = unusedFilename;
 // TODO: Remove this for the next major release
 module.exports.default = unusedFilename;
 
-module.exports.sync = (filePath, {incrementer = parenthesesIncrementer, maxTries = Infinity} = {}) => {
+module.exports.sync = (filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) => {
 	let tries = 0;
 	let [originalPath] = incrementPath(filePath, incrementer);
 	let unusedPath = filePath;
