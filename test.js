@@ -4,6 +4,7 @@ import unusedFilename from './index.js';
 
 const fixturePath = file => path.join('fixtures', file);
 const underscore = {incrementer: unusedFilename.separatorIncrementer('_')};
+const dash = {incrementer: unusedFilename.separatorIncrementer('-')};
 
 test('async', async t => {
 	t.is(await unusedFilename(fixturePath('noop.txt')), fixturePath('noop.txt'));
@@ -24,6 +25,7 @@ test('async - incrementer option', async t => {
 	t.is(await unusedFilename(fixturePath('noop.txt'), underscore), fixturePath('noop.txt'));
 	t.is(await unusedFilename(fixturePath('unicorn.txt'), underscore), fixturePath('unicorn_1.txt'));
 	t.is(await unusedFilename(fixturePath('rainbow.txt'), underscore), fixturePath('rainbow_3.txt'));
+	t.is(await unusedFilename(fixturePath('rainbow.txt'), dash), fixturePath('rainbow-2.txt'));
 });
 
 test('sync', t => {
@@ -45,4 +47,5 @@ test('sync - incrementer option', t => {
 	t.is(unusedFilename.sync(fixturePath('noop.txt'), underscore), fixturePath('noop.txt'));
 	t.is(unusedFilename.sync(fixturePath('unicorn.txt'), underscore), fixturePath('unicorn_1.txt'));
 	t.is(unusedFilename.sync(fixturePath('rainbow.txt'), underscore), fixturePath('rainbow_3.txt'));
+	t.is(unusedFilename.sync(fixturePath('rainbow.txt'), dash), fixturePath('rainbow-2.txt'));
 });

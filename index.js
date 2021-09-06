@@ -24,7 +24,7 @@ const separatorIncrementer = separator => {
 	return (inputFilename, extension) => {
 		const match = new RegExp(`^(?<filename>.*)${escapedSeparator}(?<index>\\d+)$`).exec(inputFilename);
 		let {filename, index} = match ? match.groups : {filename: inputFilename, index: 0};
-		return [`${filename}${extension}`, `${filename.trim()}_${++index}${extension}`];
+		return [`${filename}${extension}`, `${filename.trim()}${separator}${++index}${extension}`];
 	};
 };
 
