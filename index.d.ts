@@ -1,5 +1,3 @@
-/* eslint-disable no-redeclare */
-
 declare namespace unusedFilename {
 	interface Options {
 		/**
@@ -50,7 +48,7 @@ declare namespace unusedFilename {
 	})();
 	```
 	*/
-	type Incrementer = (filename: string, extension: string) => string;
+	type Incrementer = (filename: string, extension: string) => [string, string];
 
 	/**
 	The error thrown when `maxTries` limit is reached without finding an unused filename.
@@ -74,37 +72,17 @@ declare namespace unusedFilename {
 	}
 	```
 	*/
+	/* eslint-disable @typescript-eslint/no-misused-new */
 	interface MaxTryError extends Error {
 		originalPath: string;
 		lastTriedPath: string;
+		new (originalPath: string, lastTriedPath: string): MaxTryError;
 	}
+	/* eslint-enable @typescript-eslint/no-misused-new */
 }
 
+/* eslint-disable no-redeclare */
 declare const unusedFilename: {
-	/**
-	Creates an incrementer that appends a number after a separator.
-
-	`separatorIncrementer('_')` will increment `file.txt` → `file_1.txt`.
-
-	Not all characters can be used as separators:
-	- On Unix-like systems, `/` is reserved.
-	- On Windows, `<>:"/|?*` along with trailing periods are reserved.
-
-	@example
-	```
-	import unusedFilename = require('unused-filename');
-
-	console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.separatorIncrementer('_')}));
-	//=> 'rainbow_1.txt'
-	```
-	*/
-	separatorIncrementer: (separator: string) => unusedFilename.Incrementer;
-
-	MaxTryError: unusedFilename.MaxTryError;
-
-	// TODO: Remove this for the next major release
-	default: typeof unusedFilename;
-
 	/**
 	Get an unused filename by appending a number if it exists: `file.txt` → `file (1).txt`.
 
@@ -125,6 +103,11 @@ declare const unusedFilename: {
 	*/
 	(filePath: string, options?: unusedFilename.Options): Promise<string>;
 
+	MaxTryError: unusedFilename.MaxTryError;
+
+	// TODO: Remove this for the next major release
+	default: typeof unusedFilename;
+
 	/**
 	Synchronously get an unused filename by appending a number if it exists: `file.txt` → `file (1).txt`.
 
@@ -142,6 +125,26 @@ declare const unusedFilename: {
 	```
 	*/
 	sync(filePath: string, options?: unusedFilename.Options): string;
+
+	/**
+	Creates an incrementer that appends a number after a separator.
+
+	`separatorIncrementer('_')` will increment `file.txt` → `file_1.txt`.
+
+	Not all characters can be used as separators:
+	- On Unix-like systems, `/` is reserved.
+	- On Windows, `<>:"/|?*` along with trailing periods are reserved.
+
+	@example
+	```
+	import unusedFilename = require('unused-filename');
+
+	console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.separatorIncrementer('_')}));
+	//=> 'rainbow_1.txt'
+	```
+	*/
+	separatorIncrementer(separator: string): unusedFilename.Incrementer;
 };
+/* eslint-enable no-redeclare */
 
 export = unusedFilename;
