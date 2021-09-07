@@ -48,7 +48,7 @@ declare namespace UnusedFilename {
 	})();
 	```
 	*/
-	type Incrementer = (filename: string, extension: string) => string;
+	type Incrementer = (filename: string, extension: string) => [string, string];
 
 	/**
 	The error thrown when `maxTries` limit is reached without finding an unused filename.
