@@ -1,4 +1,4 @@
-declare namespace UnusedFilename {
+declare namespace unusedFilename {
 	interface Options {
 		/**
 		Custom function to increment a filename.
@@ -72,13 +72,16 @@ declare namespace UnusedFilename {
 	}
 	```
 	*/
-	class MaxTryError extends Error {
+	/* eslint-disable @typescript-eslint/no-misused-new */
+	interface MaxTryError extends Error {
 		originalPath: string;
 		lastTriedPath: string;
-		constructor(originalPath: string, lastTriedPath: string);
+		new (originalPath: string, lastTriedPath: string): MaxTryError;
 	}
+	/* eslint-enable @typescript-eslint/no-misused-new */
 }
 
+/* eslint-disable no-redeclare */
 declare const unusedFilename: {
 	/**
 	Get an unused filename by appending a number if it exists: `file.txt` → `file (1).txt`.
@@ -98,9 +101,9 @@ declare const unusedFilename: {
 	})();
 	```
 	*/
-	(filePath: string, options?: UnusedFilename.Options): Promise<string>;
+	(filePath: string, options?: unusedFilename.Options): Promise<string>;
 
-	MaxTryError: new (originalPath: string, lastTriedPath: string) => UnusedFilename.MaxTryError;
+	MaxTryError: unusedFilename.MaxTryError;
 
 	// TODO: Remove this for the next major release
 	default: typeof unusedFilename;
@@ -121,7 +124,7 @@ declare const unusedFilename: {
 	//=> 'rainbow (2).txt'
 	```
 	*/
-	sync(filePath: string, options?: UnusedFilename.Options): string;
+	sync(filePath: string, options?: unusedFilename.Options): string;
 
 	/**
 	Creates an incrementer that appends a number after a separator.
@@ -140,7 +143,8 @@ declare const unusedFilename: {
 	//=> 'rainbow_1.txt'
 	```
 	*/
-	separatorIncrementer(separator: string): UnusedFilename.Incrementer;
+	separatorIncrementer(separator: string): unusedFilename.Incrementer;
 };
+/* eslint-enable no-redeclare */
 
 export = unusedFilename;
