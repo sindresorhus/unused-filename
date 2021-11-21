@@ -6,8 +6,8 @@ Useful for safely writing, copying, moving files without overwriting existing fi
 
 ## Install
 
-```
-$ npm install unused-filename
+```sh
+npm install unused-filename
 ```
 
 ## Usage
@@ -20,12 +20,10 @@ $ npm install unused-filename
 ```
 
 ```js
-const unusedFilename = require('unused-filename');
+import {unusedFilename} from 'unused-filename';
 
-(async () => {
-	console.log(await unusedFilename('rainbow.txt'));
-	//=> 'rainbow (2).txt'
-})();
+console.log(await unusedFilename('rainbow.txt'));
+//=> 'rainbow (2).txt'
 ```
 
 ## API
@@ -37,15 +35,13 @@ Returns a `Promise<string>` containing either the original `filename` or the `fi
 If an already incremented `filePath` is passed, `unusedFilename` will simply increment and replace the already existing index:
 
 ```js
-const unusedFilename = require('unused-filename');
+import {unusedFilename} from 'unused-filename';
 
-(async () => {
-	console.log(await unusedFilename('rainbow (1).txt'));
-	//=> 'rainbow (2).txt'
-})();
+console.log(await unusedFilename('rainbow (1).txt'));
+//=> 'rainbow (2).txt'
 ```
 
-### unusedFilename.sync(filePath, options?)
+### unusedFilenameSync(filePath, options?)
 
 Synchronous version of `unusedFilename`.
 
@@ -64,15 +60,16 @@ Type: `object`
 Type: `(filePath: string) => [string, string]`\
 Default: Parentheses incrementer: `file.txt` → `file (1).txt`
 
-A function that accepts a file path, and increments its index. It's the incrementer's responsibility to extract an already existing index from the given file path so that it picks up and continues incrementing an already present index instead of appending a second one.
+A function that accepts a file path, and increments its index.
+
+It's the incrementer's responsibility to extract an already existing index from the given file path so that it picks up and continues incrementing an already present index instead of appending a second one.
 
 The incrementer has to return a tuple of `[originalFilename, incrementedFilename]`, where `originalFilename` is the filename without the index, and `incrementedFilename` is a filename with input's index bumped by one.
 
-Example incrementer that inserts a new index as a prefix:
-
 ```js
-const unusedFilename = require('unused-filename');
+import {unusedFilename} from 'unused-filename';
 
+// Incrementer that inserts a new index as a prefix.
 const prefixIncrementer = (filename, extension) => {
 	const match = filename.match(/^(?<index>\d+)_(?<originalFilename>.*)$/);
 	let {originalFilename, index} = match ? match.groups : {originalFilename: filename, index: 0};
@@ -89,11 +86,11 @@ console.log(await unusedFilename('rainbow.txt', {incrementer: prefixIncrementer}
 Type: `number`\
 Default: `Infinity`
 
-The max number of attempts to find an unused filename.
+The maximum number of attempts to find an unused filename.
 
-When the limit is reached, the function will throw `unusedFilename.MaxTryError`.
+When the limit is reached, the function will throw `MaxTryError`.
 
-### unusedFilename.separatorIncrementer
+### separatorIncrementer
 
 Creates an incrementer that appends a number after a separator.
 
@@ -104,13 +101,13 @@ Not all characters can be used as separators:
 - On Windows, `<>:"/|?*` along with trailing periods are reserved.
 
 ```js
-const unusedFilename = require('unused-filename');
+import {unusedFilename, separatorIncrementer} from 'unused-filename';
 
-console.log(await unusedFilename('rainbow.txt', {incrementer: unusedFilename.separatorIncrementer('_')}));
+console.log(await unusedFilename('rainbow.txt', {incrementer: separatorIncrementer('_')}));
 //=> 'rainbow_1.txt'
 ```
 
-### unusedFilename.MaxTryError
+### MaxTryError
 
 The error thrown when `maxTries` limit is reached without finding an unused filename.
 
@@ -122,9 +119,7 @@ It comes with 2 custom properties:
 Example:
 
 ```js
-const unusedFilename = require('unused-filename');
-
-const {MaxTryError} = unusedFilename;
+import {unusedFilename, MaxTryError} from 'unused-filename';
 
 try {
 	const path = await unusedFilename('rainbow (1).txt', {maxTries: 0});

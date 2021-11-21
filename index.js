@@ -1,9 +1,8 @@
-'use strict';
-const path = require('path');
-const pathExists = require('path-exists');
-const escapeStringRegexp = require('escape-string-regexp');
+import path from 'node:path';
+import {pathExists, pathExistsSync} from 'path-exists';
+import escapeStringRegexp from 'escape-string-regexp';
 
-class MaxTryError extends Error {
+export class MaxTryError extends Error {
 	constructor(originalPath, lastTriedPath) {
 		super('Max tries reached.');
 		this.originalPath = originalPath;
@@ -18,7 +17,14 @@ const parenthesesIncrementer = (inputFilename, extension) => {
 	return [`${filename}${extension}`, `${filename} (${++index})${extension}`];
 };
 
-const separatorIncrementer = separator => {
+const incrementPath = (filePath, incrementer) => {
+	const ext = path.extname(filePath);
+	const dirname = path.dirname(filePath);
+	const [originalFilename, incrementedFilename] = incrementer(path.basename(filePath, ext), ext);
+	return [path.join(dirname, originalFilename), path.join(dirname, incrementedFilename)];
+};
+
+export const separatorIncrementer = separator => {
 	const escapedSeparator = escapeStringRegexp(separator);
 
 	return (inputFilename, extension) => {
@@ -28,14 +34,7 @@ const separatorIncrementer = separator => {
 	};
 };
 
-const incrementPath = (filePath, incrementer) => {
-	const ext = path.extname(filePath);
-	const dirname = path.dirname(filePath);
-	const [originalFilename, incrementedFilename] = incrementer(path.basename(filePath, ext), ext);
-	return [path.join(dirname, originalFilename), path.join(dirname, incrementedFilename)];
-};
-
-const unusedFilename = async (filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) => {
+export async function unusedFilename(filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) {
 	let tries = 0;
 	let [originalPath] = incrementPath(filePath, incrementer);
 	let unusedPath = filePath;
@@ -53,20 +52,16 @@ const unusedFilename = async (filePath, {incrementer = parenthesesIncrementer, m
 		[originalPath, unusedPath] = incrementPath(unusedPath, incrementer);
 	}
 	/* eslint-enable no-await-in-loop, no-constant-condition */
-};
+}
 
-module.exports = unusedFilename;
-// TODO: Remove this for the next major release
-module.exports.default = unusedFilename;
-
-module.exports.sync = (filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) => {
+export function unusedFilenameSync(filePath, {incrementer = parenthesesIncrementer, maxTries = Number.POSITIVE_INFINITY} = {}) {
 	let tries = 0;
 	let [originalPath] = incrementPath(filePath, incrementer);
 	let unusedPath = filePath;
 
 	/* eslint-disable no-constant-condition */
 	while (true) {
-		if (!pathExists.sync(unusedPath)) {
+		if (!pathExistsSync(unusedPath)) {
 			return unusedPath;
 		}
 
@@ -77,7 +72,4 @@ module.exports.sync = (filePath, {incrementer = parenthesesIncrementer, maxTries
 		[originalPath, unusedPath] = incrementPath(unusedPath, incrementer);
 	}
 	/* eslint-enable no-constant-condition */
-};
-
-module.exports.MaxTryError = MaxTryError;
-module.exports.separatorIncrementer = separatorIncrementer;
+}
