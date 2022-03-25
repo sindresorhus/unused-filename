@@ -16,8 +16,8 @@ export interface Options {
 	const prefixIncrementer = (filename, extension) => {
 		const match = filename.match(/^(?<index>\d+)_(?<originalFilename>.*)$/);
 		let {originalFilename, index} = match ? match.groups : {originalFilename: filename, index: 0};
-		let originalFilename = originalFilename.trim();
-		return [`${originalFilename}${extension}`, `${++index}_${originalFilename}${extension}`;
+		originalFilename = originalFilename.trim();
+		return [`${originalFilename}${extension}`, `${++index}_${originalFilename}${extension}`];
 	};
 
 	console.log(await unusedFilename('rainbow.txt', {incrementer: prefixIncrementer}));
